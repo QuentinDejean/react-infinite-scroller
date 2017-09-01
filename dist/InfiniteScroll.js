@@ -110,7 +110,9 @@ var InfiniteScroll = function (_Component) {
         offset = el.scrollHeight - el.parentNode.scrollTop - el.parentNode.clientHeight;
       }
 
-      if (offset < Number(this.props.threshold)) {
+      // checking for offsetParent to ensure element is visible
+      // https://stackoverflow.com/a/21696585
+      if (el.offsetParent && offset < Number(this.props.threshold)) {
         this.detachScrollListener();
         // Call loadMore after detachScrollListener to allow for non-async loadMore functions
         if (typeof this.props.loadMore === 'function') {
